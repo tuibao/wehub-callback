@@ -12,10 +12,10 @@ WeHub只是一个提供些许便利的工具软件,无法保证你的微信不�
 ------
 
 wehub 回调接口开发文档:  
-https://github.com/fangqing/wehub-callback/blob/master/wehub-api-doc-v2.md
+https://github.com/tuibao/wehub-callback/blob/master/wehub-api-doc-v2.md
 
 faq:在与第三方企业在对接过程中遇到的相关问题的记录(整理中)     
-https://github.com/fangqing/wehub-callback/blob/master/faq.md
+https://github.com/tuibao/wehub-callback/blob/master/faq.md
 
 微信消息的静态表情转义对照表见emoji_index.html 或
 https://s.weituibao.com/wehub/Emoji/emoji_index.html
