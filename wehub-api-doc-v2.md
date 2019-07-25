@@ -1103,11 +1103,11 @@ wehub 通过report_room_member_info来主动上报,详情见[上报群成员详�
 
 - 僵死粉检测 (检测结果通过report_zoom_check_status上报)
  {
-     "task_type":15
-     "task_dict":
-     {
-		"wxid":"xxxxx"		//待检测的wxid
-	 }
+   "task_type":15
+   "task_dict":
+    {
+      "wxid":"xxxxx"		//待检测的wxid
+    }
  }
 
 - 操作标签(新增,删除标签)
@@ -1115,12 +1115,12 @@ wehub 通过report_room_member_info来主动上报,详情见[上报群成员详�
     "task_type":100
     "task_dict":
     {
-    	"tag_name":"xxxxx",  //被操作的标签名
-    	"wxid_list":["wxid_xxx","wxid_xxx"]    //群或者好友的wxid(不能包含陌生人)
-    	"op_code" : xx   // 1:将wxid_list加入到tag_name标签中(如果没有这个标签则新建这个标签)
-    					 // 2:将wxid_list中的成员从tag_name标签中删除
-    					 // 3:删除tag_name标签(此时会忽略wxid_list参数)  					 
-	}
+      "tag_name":"xxxxx",  //被操作的标签名
+      "wxid_list":["wxid_xxx","wxid_xxx"]    //群或者好友的wxid(不能包含陌生人)
+      "op_code" : xx   // 1:将wxid_list加入到tag_name标签中(如果没有这个标签则新建这个标签)
+              // 2:将wxid_list中的成员从tag_name标签中删除
+              // 3:删除tag_name标签(此时会忽略wxid_list参数)
+    }
 }
 - 重命名标签
 (将old_tag_name标签重命名为new_tag_name)
@@ -1128,9 +1128,9 @@ wehub 通过report_room_member_info来主动上报,详情见[上报群成员详�
     "task_type":101
     "task_dict":
     {
-    	"old_tag_name": "xxxx",
-    	"new_tag_name":"xxxx"
-	}
+      "old_tag_name": "xxxx",
+      "new_tag_name":"xxxx"
+    }
 }
 
 ```
@@ -1144,12 +1144,13 @@ request格式
     "action":"report_zoom_check_status",
     "appid": "xxxxxxx",
     "wxid":	"xxxxxxx",
-    "data":{
-    	"wxid":"xxxxxx",//被检测的wxid
-    	"status": x  	//0 :正常状态(不是僵尸粉)
-    					//1 :检测为僵尸粉(对方把我拉黑了)
-                    	//2 :检测为僵尸粉(对方把我从他的好友列表中删除了)
-	}
+    "data":
+    {
+      "wxid":"xxxxxx",//被检测的wxid
+      "status": x  	//0 :正常状态(不是僵尸粉)
+                    //1 :检测为僵尸粉(对方把我拉黑了)
+                    //2 :检测为僵尸粉(对方把我从他的好友列表中删除了)
+    }
 }
 ```
 respone格式为<a href="#common_ack">[common_ack格式]</a>
@@ -1172,7 +1173,8 @@ respone格式
     "error_code": 0,                    
     "error_reason": "",     
     "ack_type":"pull_task_ack",         
-    "data":{
+    "data":
+    {
          //wehub通过task_id来识别不同的任务(task_id其值是由回调接口生成的字符串,请保证有唯一性)
         "task_id": "任务id",    //字符串
         "task_data": $task     //单个任务
