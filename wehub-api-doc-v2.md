@@ -67,7 +67,7 @@
   本文档中所有数据结构中的"wxid"/"room_wxid"字段即代表个人微信账号/微信群号的唯一的标识字符串.
 
 - WeHub和第三方回调接口是如何通讯的?
-  WeHub和回调接口之间采用http的方式进行通讯,双方都采用json格式的数据,utf-8编码. 
+  WeHub和回调接口之间采用http的方式进行通讯,双方都采用json格式的数据(Content-Type为application/json),utf-8编码. 
   当微信中有相关的事件发生时,WeHub会主动Post http request到回调接口,
   该http request中包含了解释具体微信事件的数据,回调接口返回
   http respone,respone中包含第三方需要WeHub执行的任务(任务的格式见文档中描述)
@@ -731,7 +731,7 @@ eg:
     'file_index':file_index     //接收到的文件的file_index
 }
 ```
-以下为 wehub向上传接口上传图片文件的http request示例
+以下为 wehub向上传接口上传图片文件的http request示例(Content-Type: multipart/form-data)
 ```
 Content-Type: multipart/form-data; boundary="boundary_.oOo._OTg2Ng==MzU3Mg==MjEwNzE="
 MIME-Version: 1.0
