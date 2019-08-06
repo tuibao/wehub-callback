@@ -185,7 +185,9 @@ report_zoom_check_status|common_ack
   点击该微信PC客户端左上方头像,将弹出的界面中显示的微信号的字符串值加入到的白名单中.
 
 ![image](http://wxbs.oss-cn-hangzhou.aliyuncs.com/wehub/img/get_wechat_id.png)
+
 服务端在收到login时如何判断?
+
 ![image](http://wxbs.oss-cn-hangzhou.aliyuncs.com/wehub/img/login_process.png)
 
 
