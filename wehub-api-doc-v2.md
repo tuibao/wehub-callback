@@ -182,7 +182,7 @@ report_zoom_check_status|common_ack
 白名单的微信号将无法用appid登陆wehub,也不会计入当月的使用量.
 </b></p>
 如何将我信任的微信号加入到白名单中? 
-  点击该微信PC客户端左上方头像,将弹出的界面中显示的微信号的字符串值加入到的白名单中.
+点击该微信PC客户端左上方头像,将弹出的界面中显示的微信号的字符串值加入到的白名单中.
 
 ![image](http://wxbs.oss-cn-hangzhou.aliyuncs.com/wehub/img/get_wechat_id.png)
 
