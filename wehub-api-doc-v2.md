@@ -174,12 +174,13 @@ report_zoom_check_status|common_ack
 
 <p>自0.2.2版本开始,wehub引进了"安全性验证"机制. 第三方的管理员请登录<a href="http://wehub.weituibao.com">WeHub后台</a>
 对回调参数进行配置, 系统会自动为每一个appID生成了"secret key"(该值用于之后的签名计算).</p>
+
 ![image](http://wxbs.oss-cn-hangzhou.aliyuncs.com/wehub/img/wehub_s1.png)
 <p><b>WeHub的计费策略是每月按appid统计登陆wehub的微信号的数量,
 因此登陆wehub的微信号数量直接影响第三方的wehub使用费用.
-为了使登陆的微信号处于可控状态,第三方必须在服务端建立白名单,
+为了使登陆的微信号处于可控状态,第三方必须在服务端建立白名单,只允许白名单之内的微信号登陆.
 在处理login请求时对白名单之外的微信号返回登陆失败,这样没有列入
-白名单的微信号将无法用appid登陆wehub,也不会计入当月的使用量.
+白名单的微信号将无法登陆wehub,也不会计入当月的使用量.
 </b></p>
 如何将我信任的微信号加入到白名单中? 
 点击该微信PC客户端左上方头像,将弹出的界面中显示的微信号的字符串值加入到的白名单中.
@@ -191,7 +192,7 @@ report_zoom_check_status|common_ack
 ![image](http://wxbs.oss-cn-hangzhou.aliyuncs.com/wehub/img/login_process.png)
 
 
-request格式为
+login request格式为
 
 ```
 {
