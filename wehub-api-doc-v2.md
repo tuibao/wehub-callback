@@ -182,7 +182,7 @@ report_zoom_check_status|common_ack
 在处理login请求时对白名单之外的微信号返回登陆失败,这样没有列入
 白名单的微信号将无法登陆wehub,也不会计入当月的使用量.
 </b></p>
-如何将我信任的微信号加入到白名单中? 
+疑问1.如何将我信任的微信号加入到白名单中? 
 点击该微信PC客户端左上方头像,将弹出的界面中显示的微信号的字符串值加入到的白名单中.
 
 ![image](http://wxbs.oss-cn-hangzhou.aliyuncs.com/wehub/img/get_wechat_id.png)
@@ -191,6 +191,9 @@ report_zoom_check_status|common_ack
 
 ![image](http://wxbs.oss-cn-hangzhou.aliyuncs.com/wehub/img/login_process.png)
 
+<b>
+疑问2:我想添加群里其他人的微信号到我的白名单里,但是为何我看不到他们中某些人的微信号?
+ 这是因为你与这些人是陌生人关系.微信出于安全考虑,对陌生人屏蔽了自己的微信号.
 
 login request格式为
 
