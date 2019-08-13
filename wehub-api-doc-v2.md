@@ -191,7 +191,6 @@ report_zoom_check_status|common_ack
 
 ![image](http://wxbs.oss-cn-hangzhou.aliyuncs.com/wehub/img/login_process.png)
 
-<b>
 疑问2:我想添加群里其他人的微信号到我的白名单里,但是为何我看不到他们中某些人的微信号?
  这是因为你与这些人是陌生人关系.微信出于安全考虑,对陌生人屏蔽了自己的微信号.
 
