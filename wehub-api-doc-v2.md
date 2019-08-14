@@ -14,6 +14,7 @@
 2019.1.18|v0.3.8|增加report_friend_removed
 2019.3.15|v0.4.0|客户端新增升级功能并强制在登陆时做安全验证.  新增检查僵尸粉的任务类型(task_type为15), report_contact_update 的userInfo 结构中新增is_friend字段.
 2019.4.4|v0.4.2|上报的个人微信号的信息中(城市,省份,国家等信息已准确),新增100,101两种本地打标签的任务类型.  wehub已支持websocket方式的通讯(见文档最下方的描述).   在发消息任务中增加at_style字段,可以把@符号放在文本中的任意位置 (见该任务类型的详细描述)
+2019.8.14|v0.4.6|增加"查询个人号详情"的任务(task_type为16)和"创建新的群"的任务(task_type为16),新增report_user_info
 
 ## 概述
 
@@ -293,7 +294,7 @@ data中相关字段描述
     "nickname":"xxxxx",             //微信昵称
     "remark_name" :"xxxx",          //好友备注
     "head_img":"http://xxxxxxxx"    //头像的url地址
-    "sex" : xx ,    				//性别:0或者1,默认是0,1代表女性
+    "sex" : xx ,    				//性别:1男，2女
     "country":"xxx",				//祖国(可能为空)
     "province":"xxxx",				//省份(可能为空)
     "city":"xxxxx"					//城市(可能为空)
@@ -403,7 +404,7 @@ $userInfo
     "nickname":"xxxxx",             //微信昵称
     "remark_name" :"xxxx",          //好友备注
     "head_img":"http://xxxxxxxx"    //头像的url地址
-    "sex" : xx ,    				//性别:0或者1,默认是0,1代表女性
+    "sex" : xx ,    				//性别:1 男， 2 女
     "country":"xxx",				//祖国(可能为空)
     "province":"xxxx",				//省份(可能为空)
     "city":"xxxxx"					//城市(可能为空)
@@ -1117,6 +1118,26 @@ wehub 通过report_room_member_info来主动上报,详情见[上报群成员详�
     }
  }
 
+- 获取指定wxid的详情(结果通过report_user_info上报)
+{
+  "task_type":16,
+  "task_dict":
+  {
+    "wxid":"xxxxx"      //要获取其详情的个人号的wxid
+  }
+}
+
+- 创建群(新建群聊)
+{
+  "task_type":17,
+  "task_dict":
+  {
+    "member_list":["xxxx","xxxx"....]   // memberList里面是要添加群聊的人员的微信id，如果不是微信id，可能添加失败
+  }
+}
+注:每个微信号每天能创建的群是有上限的,无限制的创建群会带来封号风险,该任务只支持2.6.8.52及以上版本的微信.
+
+
 - 操作标签(新增,删除标签)
 {
     "task_type":100
@@ -1234,6 +1255,31 @@ request格式
 
 respone格式为<a href="#common_ack">[common_ack格式]</a>
 
+
+### report_user_info
+上报具体某个微信的详情.
+{
+  "action":"report_user_info",
+  "appid": "xxxxxxx",         
+  "wxid" : "wxid_xxxxxxxx"
+  "data":
+  {
+    "wxid":  "xxxxx",               //wxid
+    "wx_alias": "xxxxx",            //有可能为空
+    "nickname":"xxxxx",             //微信昵称
+    "remark_name" :"xxxx",          //好友备注
+    "head_img":"http://xxxxxxxx"    //头像的url地址(有可能获取不到为空)
+    "head_img_data":"xxxxxxxxxx"    //头像的二进制数据(jpg格式)经过base64编码后的字符串
+    "sex" : xx ,            //性别:1 男， 2 女
+    "country":"xxx",        //祖国(可能为空)
+    "province":"xxxx",        //省份(可能为空)
+    "city":"xxxxx"          //城市(可能为空)
+    "is_friend": x        //是否是我的好友,0:不是;1:是
+    "room_list":["xx","xxx"]    //该微信号所在的群的列表
+  }
+}
+
+如果能获取到头像的url地址(head_img),则head_img_data为空
 
 ## 其他
 ### 容易混淆的地方
