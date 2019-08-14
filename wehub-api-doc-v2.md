@@ -1257,7 +1257,9 @@ respone格式为<a href="#common_ack">[common_ack格式]</a>
 
 
 ### report_user_info
-上报具体某个微信的详情.
+上报具体某个微信的详情
+request格式
+```
 {
   "action":"report_user_info",
   "appid": "xxxxxxx",         
@@ -1278,7 +1280,7 @@ respone格式为<a href="#common_ack">[common_ack格式]</a>
     "room_list":["xx","xxx"]    //该微信号所在的群的列表
   }
 }
-
+```
 如果能获取到头像的url地址(head_img),则head_img_data为空
 
 ## 其他
