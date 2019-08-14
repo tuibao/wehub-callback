@@ -35,40 +35,32 @@ https://s.weituibao.com/wehub/Emoji/emoji_index.html
 更新方式: 开启一个wehub客户端(此时最好不要登陆任何微信),点击右上角设置按钮-->弹出菜单-->检测更新,更新包下载完成之后会自动运安装.
 
 版本更新记录:  
-- 2019.8.15:
+- 2019.8.15:  
   发布0.4.6: https://s.weituibao.com/wehub/package/WeHubSetup0.4.6.exe  
   增加对最新微信版本的支持.  
   支持2.6.4.56|2.6.5.38|2.6.6.28|2.6.7.40|2.6.7.57|2.6.8.51|2.6.8.52|2.6.8.65|2.6.8.68|2.7.0.64 版本的微信  
-  新增两种任务类型(查询个人号详情,创建群)
+  新增两种任务类型(查询个人号详情,创建群)  
   
-- 2019.7.4:
-
-  发布0.4.5: https://s.weituibao.com/wehub/package/WeHubSetup0.4.5.exe 
+  
+- 2019.7.4:  
+  发布0.4.5: https://s.weituibao.com/wehub/package/WeHubSetup0.4.5.exe  
   fix some bug
   
-- 2019.6.3:
 
-  发布0.4.4: https://s.weituibao.com/wehub/package/WeHubSetup0.4.4.exe 
+- 2019.6.3:  
+  发布0.4.4: https://s.weituibao.com/wehub/package/WeHubSetup0.4.4.exe  
+  适配最新版本微信(2.6.8.51/2.6.8.52)  
+  支持2.6.4.56|2.6.5.38|2.6.6.28 |2.6.7.40|2.6.7.57 |2.6.8.51|2.6.8.52 这几个版本的微信  
 
-  适配最新版本微信(2.6.8.51/2.6.8.52)
+- 2019.4.4:  
+  发布0.4.2: https://s.weituibao.com/wehub/package/WeHubSetup0.4.2.exe  
+  支持2.6.4.56|2.6.5.38|2.6.6.28 |2.6.7.40|2.6.7.57 这几个版本的微信  
+  (可通过0.4.0 或者0.4.1版本升级到该版本)  
+  wehub对websocket连接的支持(如何让wehub连接到第三方的websocket 服务 见文档中的详细描述.)  
+  (websocket服务端/客户端的demo:https://github.com/fangqing/wehub-callback-websocket)  
+  新增两种任务类型(操作wehub本地的标签)  
+  发消息@别人时'@'符号可放任意位置  
 
-  支持2.6.4.56|2.6.5.38|2.6.6.28 |2.6.7.40|2.6.7.57 |2.6.8.51|2.6.8.52 这几个版本的微信
-
-- 2019.4.4:
-
-  发布0.4.2: https://s.weituibao.com/wehub/package/WeHubSetup0.4.2.exe 
-
-  支持2.6.4.56|2.6.5.38|2.6.6.28 |2.6.7.40|2.6.7.57 这几个版本的微信
-
-  (可通过0.4.0 或者0.4.1版本升级到该版本)
-
-  wehub对websocket连接的支持(如何让wehub连接到第三方的websocket 服务 见文档中的详细描述.)
-
-  (websocket服务端/客户端的demo:https://github.com/fangqing/wehub-callback-websocket)
-
-  新增两种任务类型(操作wehub本地的标签);
-
-  发消息@别人时'@'符号可放任意位置
 
 - 2019.3.18:
 
