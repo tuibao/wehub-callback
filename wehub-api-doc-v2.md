@@ -1132,8 +1132,10 @@ wehub 通过report_room_member_info来主动上报,详情见[上报群成员详�
   "task_type":17,
   "task_dict":
   {
-    "member_list":["xxxx","xxxx"....]   // memberList里面是要添加群聊的人员的微信id，如果不是微信id，可能添加失败
-  }
+    "member_list":["xxxx","xxxx"....]   
+    // member_list里面是要添加群聊的人员的微信id，如果不是微信id，可能添加失败  
+    // member_list 里不用包含自己的微信id  
+    // 由于群聊必须至少3个人, 因此member_list里必须包含至少两个好友的wxid.
 }
 注:每个微信号每天能创建的群是有上限的,无限制的创建群会带来封号风险,该任务只支持2.6.8.52及以上版本的微信.
 
