@@ -948,8 +948,8 @@ respone格式为<a href="#common_ack">[common_ack格式]</a>
     "msg_type":43, 	
     "video_url":"http://xxxxxxx/xx.mp4" //回调接口推送给用户的视频的url地址, mp4格式 
 }
-注:如果要发文件,将video_url的值换成文件的url的地址即可(无格式限制)  
-比如 https://archive.apache.org/dist/httpd/docs/httpd-docs-2.4.16.en.pdf
+注:如果要发任意文件(文件格式无限制),将video_url的值换成要发送的文件的url的地址即可.  
+https://archive.apache.org/dist/httpd/docs/httpd-docs-2.4.16.en.pdf
 
 
 ⑹个人名片
