@@ -170,7 +170,7 @@ report_friend_removed|common_ack
 report_zoom_check_status|common_ack
 report_user_info|common_ack
 
-注:上述action中,回调接口必须实现对login的正确处理,否则使用相应appid的wehub 客户端将无法使用,对于其他不感兴趣/不想处理的action,可简单返回一个空的json{}.(总之收到wehub发送request后,回调接口必须有respone返回, 原因见<a href="../faq.md#faq12">Faq</a>)
+注:上述action中,回调接口必须实现对login的正确处理,否则使用相应appid的wehub 客户端将无法使用,对于其他不感兴趣/不想处理的action,可简单返回一个空的json{}.(总之收到wehub发送request后,回调接口必须有respone返回, 原因见<a href="./faq.md#faq12">Faq</a>)
 
 ### login(微信登录通知)
 这是appid验证通过并且微信登陆后向回调接口发送的第一个request
