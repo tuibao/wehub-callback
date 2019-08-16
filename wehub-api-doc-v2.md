@@ -14,7 +14,9 @@
 2019.1.18|v0.3.8|增加report_friend_removed
 2019.3.15|v0.4.0|客户端新增升级功能并强制在登陆时做安全验证.  新增检查僵尸粉的任务类型(task_type为15), report_contact_update 的userInfo 结构中新增is_friend字段.
 2019.4.4|v0.4.2|上报的个人微信号的信息中(城市,省份,国家等信息已准确),新增100,101两种本地打标签的任务类型.  wehub已支持websocket方式的通讯(见文档最下方的描述).   在发消息任务中增加at_style字段,可以把@符号放在文本中的任意位置 (见该任务类型的详细描述)
-2019.8.14|v0.4.6|增加"查询个人号详情"的任务(task_type为16)和"创建新的群"的任务(task_type为16),新增report_user_info
+2019.8.14|v0.4.6|增加"查询个人号详情"的任务(task_type为16)和"创建新的群"的任务(task_type为16);新增report_user_info; report_new_msg上报的消息中新增了
+msg_id和msg_timestamp字段(分别代表消息的id和消息的时间戳)
+
 
 ## 概述
 
@@ -547,6 +549,8 @@ respone格式为<a href="#common_ack">[common_ack格式]</a>
 ```
 - 文本消息
 {
+    "msg_id": "xxxxx"             //消息id(字符串)
+    "msg_timestamp": xxxxxx,      //消息的时间戳(单位为秒)
     "msg_type": 1,                      //1 代表文本消息
     "room_wxid": "xxxxxxxx@chatroom",   //聊天消息发生在哪个群(如果是私聊则为空)
     "wxid_from":  "wxid_xxxxxx",     	//消息发送者的wxid
@@ -578,6 +582,8 @@ respone格式为<a href="#common_ack">[common_ack格式]</a>
   
 - 图片消息
 {
+    "msg_id": "xxxxx",            //消息id(字符串)
+    "msg_timestamp": xxxxxx,      //消息时间戳(单位为秒,不是毫秒)
     "msg_type": 3, 					  //3 代表图片消息
     "room_wxid": "xxxxxxxx@chatroom", //同文本消息
     "wxid_from": "wxid_xxxxxx", 	//同文本消息
@@ -589,6 +595,8 @@ respone格式为<a href="#common_ack">[common_ack格式]</a>
 
 - 链接消息(分享某个网页链接)
 {
+    "msg_id": "xxxxx",            //消息id(字符串)
+    "msg_timestamp": xxxxxx,      //消息时间戳(单位为秒)
     "msg_type":49, 					//49 代表链接消息
     "room_wxid": "xxxxxxxx@chatroom", 
     "wxid_from": "wxid_xxxxxx", 
@@ -604,6 +612,8 @@ raw_msg 中的关键字段有"title","des","url","thumburl"(分别与link_title,
 
 - 表情消息
 {
+    "msg_id": "xxxxx",
+    "msg_timestamp": xxxxxx,
     "msg_type":47, 					
     "room_wxid": "xxxxxxxx@chatroom", 
     "wxid_from": "wxid_xxxxxx", 
@@ -614,7 +624,9 @@ raw_msg 中的关键字段有"title","des","url","thumburl"(分别与link_title,
 
 - 小程序
 {
-    "msg_type":4901, 					
+    "msg_id": "xxxxx",
+    "msg_timestamp": xxxxxx,
+    "msg_type":4901,
     "room_wxid": "xxxxxxxx@chatroom", 
     "wxid_from": "wxid_xxxxxx", 
     "wxid_to": "wxid_xxxxxx", 
@@ -632,6 +644,8 @@ raw_msg 中的关键字段有"title","des","url","thumburl"(分别与link_title,
    (只有这种情况下才能自动收账,格式见自动收账任务)
    2.我确认收账时:wxid_from='我的wxid',wxid_to='他人的wxid',paysubtype=3
 {
+    "msg_id": "xxxxx",
+    "msg_timestamp": xxxxxx,
     "msg_type":4902, 					
     "wxid_from": "wxid_xxxxxx", 
     "wxid_to": "wxid_xxxxxx", 
@@ -643,6 +657,8 @@ raw_msg 中的关键字段有"title","des","url","thumburl"(分别与link_title,
 - 文件
 (从0.3.3版本开始支持文件上传)
 {
+    "msg_id": "xxxxx"
+    "msg_timestamp": xxxxxx,
     "msg_type":4903, 					
     "room_wxid": "xxxxxxxx@chatroom", 	//发生在哪个群里
     "wxid_from": "wxid_xxxxxx", 	  	//文件发送者
@@ -654,6 +670,8 @@ raw_msg 中的关键字段有"title","des","url","thumburl"(分别与link_title,
 }
 - 个人名片
 {
+    "msg_id": "xxxxx",
+    "msg_timestamp": xxxxxx,
     "msg_type":42, 					
     "room_wxid": "xxxxxxxx@chatroom", 
     "wxid_from": "wxid_xxxxxx", 
@@ -663,6 +681,8 @@ raw_msg 中的关键字段有"title","des","url","thumburl"(分别与link_title,
 - 语音消息
 (从0.3.0版本开始支持上传消息中的语音文件,将微信中原始语音数据转化为MP3格式后上报)
 {
+    "msg_id": "xxxxx",
+    "msg_timestamp": xxxxxx,
     "msg_type":34, 					
     "room_wxid": "xxxxxxxx@chatroom", 
     "wxid_from": "wxid_xxxxxx", 
@@ -672,6 +692,8 @@ raw_msg 中的关键字段有"title","des","url","thumburl"(分别与link_title,
 }
 - 视频消息
 {
+    "msg_id": "xxxxx",
+    "msg_timestamp": xxxxxx, 
     "msg_type":43, 					
     "room_wxid": "xxxxxxxx@chatroom", 
     "wxid_from": "wxid_xxxxxx", 
@@ -682,6 +704,8 @@ raw_msg 中的关键字段有"title","des","url","thumburl"(分别与link_title,
 
 - 微信系统通知
 {
+    "msg_id": "xxxxx",
+    "msg_timestamp": xxxxxx,
     "msg_type":10000, 					
     "room_wxid": "xxxxxxxx@chatroom", 
     "wxid_from": "wxid_xxxxxx", 
@@ -949,7 +973,8 @@ respone格式为<a href="#common_ack">[common_ack格式]</a>
     "video_url":"http://xxxxxxx/xx.mp4" //回调接口推送给用户的视频的url地址, mp4格式 
 }
 注:如果要发任意文件(文件格式无限制),将video_url的值换成要发送的文件的url的地址即可.  
-https://archive.apache.org/dist/httpd/docs/httpd-docs-2.4.16.en.pdf
+例如若video_url设为 https://archive.apache.org/dist/httpd/docs/httpd-docs-2.4.16.en.pdf  
+即可将该pdf文件发送给对方.
 
 
 ⑹个人名片
