@@ -168,8 +168,9 @@ report_friend_add_request|common_ack
 report_new_room|common_ack
 report_friend_removed|common_ack  
 report_zoom_check_status|common_ack
+report_user_info|common_ack
 
-**上述action中,回调接口必须实现对login的正确处理,否则使用相应appid的wehub 客户端将无法使用,对于其他不感兴趣/不想处理的action,可简单返回一个空的json**{}
+注:上述action中,回调接口必须实现对login的正确处理,否则使用相应appid的wehub 客户端将无法使用,对于其他不感兴趣/不想处理的action,可简单返回一个空的json{}.(总之收到wehub发送request后,回调接口必须有respone返回, 原因见<a href="../faq.md#faq12">Faq</a>)
 
 ### login(微信登录通知)
 这是appid验证通过并且微信登陆后向回调接口发送的第一个request
@@ -232,8 +233,14 @@ login request格式为
 将login request中的wxid和nonce两个字段的值取出
 然后将wxid,nonce,secretkey用'#'符号拼接成字符串,计算出md5值,该md5值的32位编码字符串即为签名值.
 
-比如wxid为"fangqing_hust",nonce值为"helloworld",secretkey为"112233",
+例如:wxid为"fangqing_hust",nonce值为"helloworld",secretkey为"112233",
 则signature = md5("fangqing_hust#helloworld#112233") = "4B8D798F8B34A7BD2CD3B4CBFA309D9C"
+注意:返回的是md5值的32位字符串,不是16位的.(大写小写都可以)
+
+WeHub收到回调接口的login respone后
+1.校验signature(若不通过弹框提示签名失败)
+2.检查error_code的值.若不为0,则会弹框提示登陆失败及失败原因(从error_reason字段中取值)
+通过以上检测后WeHub才算登陆成功(之后才会上报各种事件)
 ```
 
 <p><b>从0.4.0版本开始,wehub客户端已强制要求做安全验证(无论后台是否取消了安全验证,request中都会有nonce 字段).对于服务端而言,只需判断受到的request中是否有nonce 字段, 有这个字段时服务端必须返回正确的签名!!! 没有这个字段时回调接口无需做签名处理(signature可以置空)</b></p>
