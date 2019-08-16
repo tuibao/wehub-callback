@@ -948,6 +948,10 @@ respone格式为<a href="#common_ack">[common_ack格式]</a>
     "msg_type":43, 	
     "video_url":"http://xxxxxxx/xx.mp4" //回调接口推送给用户的视频的url地址, mp4格式 
 }
+注:如果要发文件,将video_url的值换成文件的url的地址即可(无格式限制)  
+比如 https://archive.apache.org/dist/httpd/docs/httpd-docs-2.4.16.en.pdf
+
+
 ⑹个人名片
 {
     "msg_type":42, 	
@@ -1134,7 +1138,7 @@ wehub 通过report_room_member_info来主动上报,详情见[上报群成员详�
   {
     "member_list":["xxxx","xxxx"....]   
     // member_list里面是要添加群聊的人员的微信id，如果不是微信id，可能添加失败  
-    // member_list 里不用包含自己的微信id(创建的群聊默认是包含当前微信id的)
+    // member_list里不用包含自己的微信id(创建的群聊默认是包含当前微信id的)
     // 由于群聊必须至少3个人, 因此member_list里必须包含至少2个好友的wxid.
 }
 注:每个微信号每天能创建的群是有上限的,无限制的创建群会带来封号风险,该任务只支持2.6.8.52及以上版本的微信.
