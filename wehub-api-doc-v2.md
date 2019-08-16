@@ -14,7 +14,7 @@
 2019.1.18|v0.3.8|增加report_friend_removed
 2019.3.15|v0.4.0|客户端新增升级功能并强制在登陆时做安全验证.  新增检查僵尸粉的任务类型(task_type为15), report_contact_update 的userInfo 结构中新增is_friend字段.
 2019.4.4|v0.4.2|上报的个人微信号的信息中(城市,省份,国家等信息已准确),新增100,101两种本地打标签的任务类型.  wehub已支持websocket方式的通讯(见文档最下方的描述).   在发消息任务中增加at_style字段,可以把@符号放在文本中的任意位置 (见该任务类型的详细描述)
-2019.8.14|v0.4.6|增加"查询个人号详情"的任务(task_type为16)和"创建新的群"的任务(task_type为16);新增report_user_info; report_new_msg上报的消息中新增了msg_id和msg_timestamp字段(分别代表消息的id和消息的时间戳)
+2019.8.14|v0.4.6|新增了"查询个人号详情"的任务(task_type为16)和"创建新的群"的任务(task_type为17);新增report_user_info; report_new_msg上报的消息中新增了msg_id和msg_timestamp字段(分别代表消息的id和消息的时间戳)
 
 
 
