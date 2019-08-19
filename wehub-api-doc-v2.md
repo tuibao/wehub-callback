@@ -927,6 +927,8 @@ respone格式为<a href="#common_ack">[common_ack格式]</a>
    通过好友验证|13
    重新上报当前好友列表和群列表|14
    检测某个wxid是否是僵尸|15
+   获取指定wxid的详情|16
+   创建群|17
 
 [文本消息中静态表情转义对照表](http://wxbs.oss-cn-hangzhou.aliyuncs.com/wehub/Emoji/emoji_index.html)
 
