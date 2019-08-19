@@ -1,5 +1,5 @@
 
-wehub最新版本下载:https://s.weituibao.com/wehub/package/WeHubSetup0.4.5.exe
+wehub最新版本下载:https://s.weituibao.com/wehub/package/WeHubSetup0.4.6.exe
 
 使用wehub是否会导致封号?
 
