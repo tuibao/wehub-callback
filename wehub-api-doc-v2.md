@@ -557,7 +557,7 @@ respone格式为<a href="#common_ack">[common_ack格式]</a>
 - 文本消息
 {
     "msg_id": "xxxxx"             //消息id(字符串)
-    "msg_timestamp": xxxxxx,      //消息的时间戳(单位为秒)
+    "msg_timestamp": xxxxxx,      //消息的时间戳(单位为毫秒)
     "msg_type": 1,                      //1 代表文本消息
     "room_wxid": "xxxxxxxx@chatroom",   //聊天消息发生在哪个群(如果是私聊则为空)
     "wxid_from":  "wxid_xxxxxx",     	//消息发送者的wxid
@@ -590,7 +590,7 @@ respone格式为<a href="#common_ack">[common_ack格式]</a>
 - 图片消息
 {
     "msg_id": "xxxxx",            //消息id(字符串)
-    "msg_timestamp": xxxxxx,      //消息时间戳(单位为秒,不是毫秒)
+    "msg_timestamp": xxxxxx,      //消息时间戳(单位为毫秒)
     "msg_type": 3, 					  //3 代表图片消息
     "room_wxid": "xxxxxxxx@chatroom", //同文本消息
     "wxid_from": "wxid_xxxxxx", 	//同文本消息
@@ -602,8 +602,8 @@ respone格式为<a href="#common_ack">[common_ack格式]</a>
 
 - 链接消息(分享某个网页链接)
 {
-    "msg_id": "xxxxx",            //消息id(字符串)
-    "msg_timestamp": xxxxxx,      //消息时间戳(单位为秒)
+    "msg_id": "xxxxx",            
+    "msg_timestamp": xxxxxx,      
     "msg_type":49, 					//49 代表链接消息
     "room_wxid": "xxxxxxxx@chatroom", 
     "wxid_from": "wxid_xxxxxx", 
