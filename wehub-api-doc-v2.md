@@ -237,7 +237,8 @@ WeHub收到回调接口的login respone后
 通过以上检测后WeHub才算登陆成功(之后才会上报各种事件)
 ```
 
-login_ack中flag_report_contact包含的选项如下  
+#### login_ack中flag_report_contact
+因为report_contact上报的数据量太大,可以通过该flag来指定只上传一部分关心的数据  .
 值|含义  
 ----|----  
 0|不发送report_contact  
