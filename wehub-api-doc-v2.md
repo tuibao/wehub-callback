@@ -144,7 +144,7 @@ wehub发送的数据(简称为:request)json格式为:
 ```
 >wehub发送的request 以utf-8编码,回调接口返回的respone 中的json格式数据 wehub 也以utf-8编码来解析 ,文档的示例代码中出现的  "$xxx"  符号代表这里应该出现一个名为"xxx"结构的数据对象,如 <a href="#memberInfo">$memberInfo</a>,  <a href="#task">$task</a>,  <a   href ="#report_msgunit">$report_msgunit</a>等
 
-request中的action 类型|respone中的ack_type
+request中的action类型|respone中的ack_type
 ----|----
 login|login_ack
 logout|logout_ack
@@ -238,12 +238,12 @@ WeHub收到回调接口的login respone后
 ```
 
 login_ack中flag_report_contact包含的选项如下  
-值|含义
-----|----
-0|不发送report_contact  
-1|发送的report_contact中包含好友的信息(friend_list)  
-2|发送的report_contact中包含群的信息(group_list)  
-4|发送的report_contact中包含关注的公众号的信息(public_list)  
+ 值|含义  
+ ----|----
+  0|不发送report_contact  
+  1|发送的report_contact中包含好友的信息(friend_list)  
+  2|发送的report_contact中包含群的信息(group_list)  
+  4|发送的report_contact中包含关注的公众号的信息(public_list)  
 
 (flag_report_contact的值可以为上述选项其中之一,或多个选项的联合(数值的或运算))
 
