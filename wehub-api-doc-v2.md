@@ -238,7 +238,7 @@ WeHub收到回调接口的login respone后
 ```
 
 #### login_ack中flag_report_contact
-因为report_contact上报的数据量太大,可以通过该flag来指定只上传一部分关心的数据  .
+如果report_contact完整上报[好友+群+公众号]三者的数据会导致数据量太大,故此通过该flag来指定只上传其中一部分关心的数据  
 值|含义  
 ----|----  
 0|不发送report_contact  
