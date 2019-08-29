@@ -35,11 +35,11 @@ https://s.weituibao.com/wehub/Emoji/emoji_index.html
 更新方式: 开启一个wehub客户端(此时最好不要登陆任何微信),点击右上角设置按钮-->弹出菜单-->检测更新,更新包下载完成之后会自动运安装.
 
 版本更新记录:  
-- 2019.8.29:
+- 2019.8.29:  
   发布0.4.9: https://s.weituibao.com/wehub/package/WeHubSetup0.4.9.exe  
-  修复对微信2.7.0.64版本的适配问题
-  login_ack增加option字段以支持服务端自定义的设置
-  新增task_type为18的任务类型
+  修复对微信2.7.0.64版本的适配问题  
+  login_ack增加option字段以支持服务端自定义的设置  
+  新增task_type为18的任务类型  
 
 - 2019.8.15:  
   发布0.4.6: https://s.weituibao.com/wehub/package/WeHubSetup0.4.6.exe  
