@@ -108,7 +108,16 @@ WeHub也局限于微信的各种规则限制,因此如果WeHub使用者的行为
 公众号1|gh_7ec28ec1ef37|jueduixiao888|jueduixiao888|普通的公众号wxid以gh开头
 公众号2|Tencent-Games|空|Tencent-Games|腾讯自家的公众号wxid不以gh_开头
 
-在微信app刚推出时,为了快速累积用户,允许用QQ账号来快速注册微信帐号,因此采用这种方式注册的微信帐号的wxid为qqxxxxxxx格式(目前已无法用QQ号来注册微信账号),而用手机号注册的微信帐号的wxid为wxid_xxxxx格式.每个帐号只有一次自定义别名的机会.<b>任何帐号,其wxid一定存在并且不为空,而wx_alias则可能为空.因此在wehub的数据结构中,统一用wxid来做参数进行各种操作.</b>
+在微信app刚推出时,为了快速累积用户,允许用QQ账号来快速注册微信帐号,因此采用这种方式注册的微信帐号的wxid  
+为qqxxxxxxx格式(目前已无法用QQ号来注册微信账号),而用手机号注册的微信帐号的wxid为wxid_xxxxx格式.  
+每个帐号只有一次自定义别名的机会.  
+若一个微信帐号从没有自定义过其别名,则在客户端中展现的"微信号"的值就是该帐号的wxid,反之就是其wx_alias的值
+if wx_alias is empty:  
+    微信号 = wxid  
+else  
+    微信号 = wx_alias
+
+<b>任何帐号,其wxid一定存在并且不为空,而wx_alias则可能为空.因此在wehub的数据结构中,统一用wxid来做参数进行各种操作.</b>
 
 --------------
 ## 数据结构(request/respone)
@@ -183,9 +192,9 @@ report_user_info|common_ack
 
 ![image](http://wxbs.oss-cn-hangzhou.aliyuncs.com/wehub/img/get_wechat_id.png)
 
-服务端在收到login时如何判断?
+回调接口在收到login时如何判断请求登陆微信帐号的合法性?
 
-![image](http://wxbs.oss-cn-hangzhou.aliyuncs.com/wehub/img/login_process.png)
+![image](http://wxbs.oss-cn-hangzhou.aliyuncs.com/wehub/img/login_process_2.png)
 
 疑问2:我想添加群里其他人的微信号到我的白名单里,但是为何我看不到他们中某些人的微信号?
  这是因为你与这些人是陌生人关系.微信出于安全考虑,对陌生人屏蔽了自己的微信号.
@@ -198,12 +207,12 @@ login request格式为
     "wxid" : "wxid_fo1039029348sfj",    //当前登陆的微信账号的wxid
     "data" : {
       "nickname": "Bill",              //微信昵称
-      "wx_alias": "mccbill",           //微信号(有可能为空)
+      "wx_alias": "mccbill",           //自定义的微信别号(有可能为空)
       "head_img": "http://xxxxxx",     //微信的头像地址
-      "client_version":"xxxxxx"		 //wehub的版本号
+      "client_version":"xxxxxx"        //wehub的版本号
       "nonce":"xxxxxxxxxxxxxxx"     //回调接口在计算签名时用到这个nonce值
-      								//有这个字段时服务端必须返回正确的签名
-      								//没有这个字段时回调接口无需做签名处理
+                                    //有这个字段时服务端必须返回正确的签名
+                                    //没有这个字段时回调接口无需做签名处理
       "local_ip":"192.168.0.104|211.168.0.104"
       //当前wehub所在系统中的网卡ip,如有多个以'|'分隔, 该字段是在0.2.3 版本中新加入的
        "machine_id":"xxxxxx"    //wehub客户端的标识(由计算机名+进程id生成)0.2.15版本中加入
