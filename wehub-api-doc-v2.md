@@ -246,7 +246,7 @@ WeHub收到回调接口的login respone后
 通过以上检测后WeHub才算登陆成功(之后才会上报各种事件)
 ```
 
-##### 关于login_ack中flag_report_contact
+##### <a name="flag_report_contact">关于login_ack中flag_report_contact </a>
 若在report_contact中完整上报[好友+群+公众号]三者的数据会导致数据量太大/冗余,故新增该flag来设置只上报其中一部分关心的数据  
 值|含义  
 0|不发送report_contact  
@@ -281,8 +281,11 @@ respone格式
 }
 ```
 ### report_contact(上报当前好友列表和群列表)
-<p>这是紧接login之后发送的request, 如果微信的好友/群的数量比较多,这个request post的数据将会非常大.
-由于微信客户端对联系人的信息加载是个lazy load 的过程,因此在report_contact 中上报的联系人信息可能不全,比如有的头像信息没有获取到,wehub会通过 report_contact_update的方式进行增量更新,详情见[上报成员信息变化]</p>
+WeHub在收到回调接口返回的login_ack之后,会做相关校验以验证登陆是否成功.  
+若登陆成功,会上报当前好友/群/公众号的信息, 如果微信的好友/群的数量比较多,这个request post的数据将会非常大.  
+别避免这种情况,在0.4.9中引进了<a href="#flag_report_contact">flag_report_contact</a>选项  
+由于微信客户端对联系人的信息加载是个lazy load 的过程,因此在report_contact 中上报的联系人信息可能不全,  
+比如有的头像信息没有获取到,wehub会通过 report_contact_update的方式进行增量更新,详情见[上报成员信息变化]  
 <b>report_contact 这个http请求Post的数据量会比较大(好友/群越多,post的数据就越大),请将服务端能接受的**post_max_size** 调整成至少10M </b>
 
 request格式
