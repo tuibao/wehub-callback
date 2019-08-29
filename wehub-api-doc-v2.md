@@ -238,8 +238,8 @@ WeHub收到回调接口的login respone后
 ```
 
 #### login_ack中flag_report_contact
-report_contact完整上报[好友+群+公众号]三者的数据会导致数据量太大/冗余,故通过该flag来设置只上传其中一部分关心的数据
-值|含义
+report_contact完整上报[好友+群+公众号]三者的数据会导致数据量太大/冗余,故通过该flag来设置只上传其中一部分关心的数据  
+值|含义  
 0|不发送report_contact  
 1|发送的report_contact中包含好友的信息(friend_list)  
 2|发送的report_contact中包含群的信息(group_list)  
@@ -249,7 +249,7 @@ report_contact完整上报[好友+群+公众号]三者的数据会导致数据�
 <p><b>从0.4.0版本开始,wehub客户端已强制要求做安全验证(无论后台是否取消了安全验证,request中都会有nonce 字段).对于服务端而言,只需判断受到的request中是否有nonce 字段, 有这个字段时服务端必须返回正确的签名!!! 没有这个字段时回调接口无需做签名处理(signature可以置空)</b></p>
 
 
-###  logout(微信退出通知)
+### logout(微信退出通知)
 request格式:
 ```
 {
