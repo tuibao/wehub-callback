@@ -187,16 +187,16 @@ report_user_info|common_ack
 在处理login请求时对白名单之外的微信号返回登陆失败,这样没有列入
 白名单的微信号将无法登陆wehub,也不会计入当月的使用量.
 </b></p>
-疑问1.如何将我信任的微信号加入到白名单中? 
+- 如何将我信任的微信号加入到白名单中? 
 点击该微信PC客户端左上方头像,将弹出的界面中显示的微信号的字符串值加入到的白名单中.
 
 ![image](http://wxbs.oss-cn-hangzhou.aliyuncs.com/wehub/img/get_wechat_id.png)
 
-回调接口在收到login时如何判断请求登陆微信帐号的合法性?
+- 回调接口在收到login时如何判断请求登陆微信帐号的合法性?
 
 ![image](http://wxbs.oss-cn-hangzhou.aliyuncs.com/wehub/img/login_process_2.png)
 
-疑问2:我想添加群里其他人的微信号到我的白名单里,但是为何我看不到他们中某些人的微信号?  
+- 我想添加群里其他人的微信号到我的白名单里,但是为何我看不到他们中某些人的微信号?  
  这是因为你与这些微信是陌生人关系.微信系统出于安全考虑,会对陌生人屏蔽微信号.加对方为好友后你就可以看到对方微信号了
 
 login request格式为
@@ -246,8 +246,8 @@ WeHub收到回调接口的login respone后
 通过以上检测后WeHub才算登陆成功(之后才会上报各种事件)
 ```
 
-#### login_ack中flag_report_contact
-report_contact完整上报[好友+群+公众号]三者的数据会导致数据量太大/冗余,故通过该flag来设置只上传其中一部分关心的数据  
+##### 关于login_ack中flag_report_contact
+若在report_contact中完整上报[好友+群+公众号]三者的数据会导致数据量太大/冗余,故新增该flag来设置只上报其中一部分关心的数据  
 值|含义  
 0|不发送report_contact  
 1|发送的report_contact中包含好友的信息(friend_list)  
