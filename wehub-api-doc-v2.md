@@ -238,12 +238,12 @@ WeHub收到回调接口的login respone后
 ```
 
 login_ack中flag_report_contact包含的选项如下  
- 值|含义  
- ----|----
-  0|不发送report_contact  
-  1|发送的report_contact中包含好友的信息(friend_list)  
-  2|发送的report_contact中包含群的信息(group_list)  
-  4|发送的report_contact中包含关注的公众号的信息(public_list)  
+值|含义  
+----|----  
+0|不发送report_contact  
+1|发送的report_contact中包含好友的信息(friend_list)  
+2|发送的report_contact中包含群的信息(group_list)  
+4|发送的report_contact中包含关注的公众号的信息(public_list)  
 
 (flag_report_contact的值可以为上述选项其中之一,或多个选项的联合(数值的或运算))
 
