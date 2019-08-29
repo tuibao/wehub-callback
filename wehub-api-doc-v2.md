@@ -15,19 +15,17 @@
 2019.3.15|v0.4.0|客户端新增升级功能并强制在登陆时做安全验证.  新增检查僵尸粉的任务类型(task_type为15), report_contact_update 的userInfo 结构中新增is_friend字段.
 2019.4.4|v0.4.2|上报的个人微信号的信息中(城市,省份,国家等信息已准确),新增100,101两种本地打标签的任务类型.  wehub已支持websocket方式的通讯(见文档最下方的描述).   在发消息任务中增加at_style字段,可以把@符号放在文本中的任意位置 (见该任务类型的详细描述)
 2019.8.14|v0.4.6|新增了"查询个人号详情"的任务(task_type为16)和"创建新的群"的任务(task_type为17);新增report_user_info; report_new_msg上报的消息中新增了msg_id和msg_timestamp字段(分别代表消息的id和消息的时间戳)
-
+2019.8.29|v0.4.9|login_ack增加option字段(服务端可自定义report_contact中上报的数据内容),新增task_type为18的任务类型
 
 
 ## 概述
-
-```
-- 什么是WeHub?
+#### 什么是WeHub?
   WeHub是杭州推宝科技研发的一款针对微信windows客户端的辅助工具,它能监测微信中的各种事件,
   并辅助微信执行各种操作.它同时提供了对接企业服务的能力, 这需要第三方企业(以下简称为第三方)
   开发一套符合WeHub数据应答格式的webserver接口(以下简称为回调接口)
 
-  WeHub所包含的能力分为两大类:
-   一.截获微信内部发生的各种事件,并主动向回调接口发送这些事件的详细信息.
+#### WeHub能做什么?
+  一.监听微信内部发生的各种事件,并主动向回调接口发送这些事件的详细信息.
   这些事件的种类有:
   1.微信登陆事件(login)
   2.微信登出事件(logout)
@@ -38,10 +36,10 @@
   7.收到新的加好友请求(report_friend_add_request)
   8.好友被删除(report_friend_removed)
   9.新的好友(report_new_friend)
-    
+
   二. 执行回调接口下发的指令:
   这些指令包括:
-  1.发送一条具体的消息(包括发送文字,发送图片,发送链接,发送视频,发送个人名片)
+  1.发送一条具体的消息(包括发送文字,发送图片,动态表情,任意格式的文件,发送链接,发送视频,发送个人名片)
   2.将其他人踢出群
   3.向其他人发送入群邀请
   4.获取群成员信息
@@ -56,67 +54,55 @@
   13.上报当前好友列表和群列表 
   14.检测某个微信号是否是僵尸好友
   15.上传文件:上传某条聊天信息中的图片/语音/视频
+  16.上报指定好友的详情
+  17.建群
+  18.修改群名称  
 
-- 什么是appid? 
+#### WeHub不能做什么?
+
+  <div>WeHub是基于PC版微信的功能而开发的,因此PC版微信上不具备的功能,WeHub也都不支持(如发朋友圈,发语音等行为都不支持).WeHub也局限于微信的各种规则限制,因此如果WeHub使用者的行为触犯微信的各种约束条款时,其所登陆的微信号一样会被封禁.因此使用者不能无节制地滥用WeHub</div>
+
+#### 什么是appid?
   appid是一段字符串,WeHub使用它来区分不同的第三方.任何想使用wehub服务的第三方首先向推宝科技申请,
   申请时需提交自己的回调接口地址,推宝科技会对该地址做审核.第三方在使用WeHub时首先要在WeHub中
   配置appid,WeHub验证通过后才会post数据到第三方的回调接口地址上.
 
-- 什么是wxid?
+#### 什么是wxid?
   就如同每个人都有一个身份证号一样,个人微信帐号/微信群都有唯一的标识字符串用来做区分.
   对于微信群,其格式为xxxxxx@chatroom(如8680025352@chatroom);
-  对于个人微信账号,其格式为wxid_xxxxxxx(以wxid_开头,如wxid_p9597egc5j1c21)
+  对于个人微信账号,其格式为wxid_xxxxxxx(以wxid_ 开头,如wxid_p9597egc5j1c21)
   或者xxxxxxx(不以wxid_开头,在注册微信时由注册者自定义,如fangqing_hust).
   本文档中所有数据结构中的"wxid"/"room_wxid"字段即代表个人微信账号/微信群号的唯一的标识字符串.
 
-- WeHub和第三方回调接口是如何通讯的?
-  WeHub和回调接口之间采用http的方式进行通讯,双方都采用json格式的数据(Content-Type为application/json),utf-8编码. 
-  当微信中有相关的事件发生时,WeHub会主动Post http request到回调接口,
-  该http request中包含了解释具体微信事件的数据,回调接口返回
-  http respone,respone中包含第三方需要WeHub执行的任务(任务的格式见文档中描述)
-```
+#### WeHub和第三方回调接口是如何通讯的?
+<div>WeHub和回调接口之间采用http的方式进行通讯,双方都采用utf-8编码json格式的数据(Content-Type为application/json).当微信中有相关的事件发生时,WeHub会主动post http request到回调接口,该http request中包含了解释具体微信事件的数据,回调接口返回
+http respone,respone中包含第三方需要WeHub执行的任务(任务的格式见文档中描述)</div>
 
-微信-wehub-回调接口 三者之间的数据流如下
+#### 微信-wehub-回调接口 三者之间的数据流 
 ![image](http://wxbs.oss-cn-hangzhou.aliyuncs.com/wehub/img/wehub_flow.png)
 
-<h4><b>一个微信帐号典型的注册场景如下</b></h4>
-<div>你用手机号注册一个微信帐号(输入正确的手机验证码你的微信帐号就注册好了,这个过程中你无法自定义微信号),注册成功后你的帐号显示的微信号格式为:wxid_xxxxx(这就是wxid,由微信系统默认生成)，并且和你的手机号做了默认的绑定(bind_phone_number),之后你每次登陆时输入手机号和短信验证码就可以正常登陆(微信号仍然显示为wxid_xxxxx);后来你觉得每次用手机号登陆输入验证码的过程很繁琐,并且那一长串wxid_xxxxxx 很难记住,于是你把你的微信号修改成一个让自己容易记住并且彰显个性的别名比如spider_man(这就是wx_alias)</div>
+#### wxid与wx_alias的由来
+<div>一个微信帐号典型的注册场景如下:你用手机号注册一个微信帐号(输入正确的手机验证码你的微信帐号就注册好了,这个过程中你无法自定义微信号),注册成功后你的帐号显示的微信号格式为:wxid_xxxxx(这就是wxid,由微信系统按某种规则生成,不会重复不可更改,就如同一个人的身份证号)，并且和你的手机号做了默认的绑定(bind_phone_number),之后你每次登陆时输入手机号和短信验证码就可以正常登陆(微信号仍然显示为wxid_xxxxx);后来你觉得每次用手机号登陆输入验证码的过程很繁琐,并且那一长串wxid_xxxxxx很难记住(很多人记不住自己的身份证号码),于是你把你的微信号修改成一个让自己容易记住并且彰显个性的别名比如spider_man(这就是wx_alias,由你自定义的,它也不会重复,类似你的电子邮箱地址)</div>
 
 ![image](http://wxbs.oss-cn-hangzhou.aliyuncs.com/wehub/img/wxid_wx_alias.png)
-之后你的微信号显示为自定义的wx_alias(无论是wxid还是wx_alias都能标识你的这个微信账号).    
-因此我们推测微信的帐号数据库中的表结构应该是这样的:
-
-wxid|wx_alias|bind_phone_number|bind_qq_number|bind_email|...
- ----|---|---|---|---|----
-wxid_xxxx| 帐号的别名|与帐号绑定的手机号|与帐号绑定的QQ号|与帐号绑定的邮箱地址|...
+之后你的微信号在微信客户端里显示为自定义的wx_alias,但无论是wxid还是wx_alias都能唯一标识你的这个微信账号.
 
 
-<h4><b>获取当前微信帐号的wxid的方式</b></h4>  
+#### 获取当前微信帐号的wxid的方法
+方法1: 打开wehub客户端-->设置界面-->切换到"辅助设置"页,界面上会显示当前微信账号的wxid.  
+方法2: 打开微信客户端主界面,点击左上角头像,弹出的界面上显示"微信号:xxxxx", 若是wxid_xxxx格式的,则该值为wxid,否则该值可能是自定义的帐号别名(wx_alias)而非wxid
 
-<div>方案1: 打开wehub客户端-->设置界面-->切换到"辅助设置"页,界面上会显示当前微信账号的wxid.  
-<div>方案2: 打开微信客户端主界面,点击左上角头像,弹出的界面上显示"微信号:xxxxx", 若是wxid_xxxx格式的,则该值为wxid,<b>否则该值可能是自定义的帐号别名(wx_alias)而非wxid</b>.</div>
-<br>
+#### wxid与wx_alias存在的多种形态
+账号|wxid|wx_alias|最终在微信客户端上展示的微信号|说明  
+----|---|---|---|---
+个人号1|wxid_7092880929211|空|wxid_7092880929211|该帐号注册时用了微信默认提供的微信号,目前还没有自定义wx_alias,因此该账号还有1次自定义wx_alias的机会
+个人号2|wxid_hrtv4z7etgvc22|fangqing0827|fangqing0827|该帐号注册时用了微信系统默认提供的微信号,后来又自定义wx_alias为fangqing0827(之后无法再次修改wx_alias)
+个人号3|fangqing_hust|空|fangqing_hust|该帐号注册时用了自定义的微信号,所以没有机会自定义wx_alias了,因此wx_alias一直为空
+个人号4|qq526552198|heiheizwx|heiheizwx|该帐号最初是用QQ注册的(现在已经不允许这种方式注册了),后来自定义了wx_alias为heiheizwx
+公众号1|gh_7ec28ec1ef37|jueduixiao888|jueduixiao888|普通的公众号wxid以gh开头
+公众号2|Tencent-Games|空|Tencent-Games|腾讯自家的公众号wxid不以gh_开头
 
-<h4><b>微信帐号中wxid与wx_alias存在的多种形态</b></h4>
-
- 账号类型| wxid |wx_alias|最终在微信客户端上显示的微信号
- ----|---|---|----
- 个人号1|wxid_7092880929211|空|wxid_7092880929211
-说明: 该帐号注册时用了微信默认提供的微信号,该账号之后还有1次自定义微信号的修改机会. 
-个人号2|wxid_hrtv4z7etgvc22|fangqing0827|fangqing0827
-说明: 该帐号注册时用了微信系统默认提供的微信号,但后来又重新修改为自定义的微信号.
-个人号3|fangqing_hust|空|fangqing_hust
-说明:该帐号注册时用了自定义的微信号,之后也没有机会再次修改了
-个人号4|qq526552198|heiheizwx| heiheizwx
-说明:该帐号最初是用QQ注册的(现在已经不允许这种方式注册了),并且自定义了微信号, 但后来微信也给了这种账号一次修改微信号的机会(微信的历史原因) 
-公众号:绝对搞笑视频|gh_7ec28ec1ef37|jueduixiao888|jueduixiao888
-说明:普通的公众号wxid以gh_开头,允许修改一次微信号
-公众号:腾讯游戏|Tencent-Games|空|Tencent-Games
-说明:腾讯自家的公众号wxid不以gh_开头
-
-因此任何帐号,其wxid一定存在并且不为空,而wx_alias则可能为空.<b>在wehub的数据结构中,统一用wxid来做参数进行各种操作.</b>
-
-
+在微信app刚推出时,为了快速累积用户,允许用QQ账号来快速注册微信帐号,因此采用这种方式注册的微信帐号的wxid为qqxxxxxxx格式(目前已无法用QQ号来注册微信账号),而用手机号注册的微信帐号的wxid为wxid_xxxxx格式.每个帐号只有一次自定义别名的机会.<b>任何帐号,其wxid一定存在并且不为空,而wx_alias则可能为空.因此在wehub的数据结构中,统一用wxid来做参数进行各种操作.</b>
 
 --------------
 ## 数据结构(request/respone)
@@ -227,6 +213,9 @@ login request格式为
     "ack_type":"login_ack",
     "data":{
         "signature":"xxxxxxxxxxx"   //返回给wehub客户端的签名
+         "option":{
+          "flag_report_contact": xxx   //可选标志位(0.4.9 版本中新增)
+        }
     }
 }
 签名算法:
@@ -242,6 +231,16 @@ WeHub收到回调接口的login respone后
 2.检查error_code的值.若不为0,则会弹框提示登陆失败及失败原因(从error_reason字段中取值)
 通过以上检测后WeHub才算登陆成功(之后才会上报各种事件)
 ```
+
+login_ack中flag_report_contact包含的选项如下
+Value| Meaning
+----|----
+0|不发送report_contact
+1|发送的report_contact中包含好友的信息(friend_list)
+2|发送的report_contact中包含群的信息(group_list)
+4|发送的report_contact中包含关注的公众号的信息(public_list)
+
+(flag_report_contact的值可以为上述选项其中之一,或多个选项的联合(数值的或运算))
 
 <p><b>从0.4.0版本开始,wehub客户端已强制要求做安全验证(无论后台是否取消了安全验证,request中都会有nonce 字段).对于服务端而言,只需判断受到的request中是否有nonce 字段, 有这个字段时服务端必须返回正确的签名!!! 没有这个字段时回调接口无需做签名处理(signature可以置空)</b></p>
 
@@ -280,8 +279,8 @@ request格式
     "appid": "xxxxxx",
     "wxid": "wxid_xxxxxxx",
     "data":{
+        "friend_list":[$userInfo,$userInfo,$userInfo,...],    //好友
         "group_list":[$groupinfo,$groupinfo, $groupinfo,......],  //群
-        "friend_list":[$userInfo,$userInfo,$userInfo,...],		//好友
         "public_list":[$publicinfo,$publicinfo,$publicinfo,....]  //公众号
     }
 }
@@ -929,6 +928,7 @@ respone格式为<a href="#common_ack">[common_ack格式]</a>
    检测某个wxid是否是僵尸|15
    获取指定wxid的详情|16
    创建群|17
+   修改群名称|18
 
 [文本消息中静态表情转义对照表](http://wxbs.oss-cn-hangzhou.aliyuncs.com/wehub/Emoji/emoji_index.html)
 
@@ -976,7 +976,7 @@ respone格式为<a href="#common_ack">[common_ack格式]</a>
     "link_desc": "副标题",             //链接描述（副标题）
     "link_img_url": "http://xxxxxxx"    //链接的缩略图的的Url,jpg或者png格式
 }
-⑸视频消息
+⑸视频消息/文件消息
 {
     "msg_type":43, 	
     "video_url":"http://xxxxxxx/xx.mp4" //回调接口推送给用户的视频的url地址, mp4格式 
@@ -985,8 +985,10 @@ respone格式为<a href="#common_ack">[common_ack格式]</a>
 例如若video_url设为 https://archive.apache.org/dist/httpd/docs/httpd-docs-2.4.16.en.pdf  
 即可将该pdf文件发送给对方.
 
+⑹语音消息
+暂时无法支持发送语音消息
 
-⑹个人名片
+⑺个人名片
 {
     "msg_type":42, 	
     "wxid_card":"xxxxxx" 		//个人号/公众号的wxid
@@ -1144,7 +1146,9 @@ wehub 通过report_room_member_info来主动上报,详情见[上报群成员详�
 - 重新上报联系人 (wehub会重新发送report_contact)
 {
     "task_type":14,
-    "task_dict":{}
+    "task_dict":{
+      "flag_report_contact": xxxxx          //0.4.9中新增,含义与login_ack中flag_report_contact含义相同
+    }
 }
 
 - 僵死粉检测 (检测结果通过report_zoom_check_status上报)
@@ -1177,6 +1181,15 @@ wehub 通过report_room_member_info来主动上报,详情见[上报群成员详�
 }
 注:每个微信号每天能创建的群是有上限的,无限制的创建群会带来封号风险,该任务只支持2.6.8.52及以上版本的微信.
 
+- 给群重命名
+{
+  "task_type":18,
+  "task_dict":
+  {
+    "room_wxid":"xxxxx@chatroom"        //群的wxid
+    "room_name":"xxxxx"                 //新群名称
+  }
+}
 
 - 操作标签(新增,删除标签)
 {
@@ -1362,7 +1375,7 @@ request格式
     "data":
     {
         "signature":"xxxxxxxxxxx"    //返回给wehub客户端的签名(同上)
-        "extension_protocol":
+        "extension_protocol":        
         {
             "type":"websocket",                     //目前只能是"websocket"
             "param":
@@ -1375,7 +1388,7 @@ request格式
 }
 ```
 <div>wehub获取到ws地址后,之后就会websocket服务进行连接,不再将数据post到原来回调接口地址上.
-websocket连接建立后wehub会主动定时发送心跳包给第三方websocket服务,时间间隔在heartbeat_interval字段中指定</div>
+websocket连接建立后wehub会主动定时发送心跳包给websocket服务器,时间间隔在heartbeat_interval字段中指定</div>
 
 websocket为什么需要心跳? 参考 https://blog.csdn.net/feiwutudou/article/details/80564630 
 
@@ -1389,7 +1402,7 @@ websocket为什么需要心跳? 参考 https://blog.csdn.net/feiwutudou/article/
 }
 ```
 <div>双方约定采用json格式的文本进行通讯,所有的数据格式仍然和目前已有的格式保持一致.
-由于websocket连接的双方都可以收发数据,因此wehub不再会定时发pull_task,websocket服务端可以直接通过发送common_ack, pull_task_ack格式的指令给wehub(json格式的文本) </div>
+由于websocket连接的双方都可以收发数据,因此wehub不再需要定时发pull_task,websocket服务端可以主动发送common_ack, pull_task_ack格式的指令给wehub执行(json格式的文本) </div>
 关于websocket服务端的demo:https://github.com/fangqing/wehub-callback-websocket
 
 更多的问题请参考<a href="./faq.md">faq</a>
