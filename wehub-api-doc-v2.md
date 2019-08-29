@@ -191,7 +191,6 @@ report_user_info|common_ack
  这是因为你与这些人是陌生人关系.微信出于安全考虑,对陌生人屏蔽了自己的微信号.
 
 login request格式为
-
 ```
 {
     "action" : "login",				 //登录的业务名为"login"
@@ -238,13 +237,13 @@ WeHub收到回调接口的login respone后
 通过以上检测后WeHub才算登陆成功(之后才会上报各种事件)
 ```
 
-login_ack中flag_report_contact包含的选项如下
-Value| Meaning
+login_ack中flag_report_contact包含的选项如下  
+值|含义
 ----|----
-0|不发送report_contact
-1|发送的report_contact中包含好友的信息(friend_list)
-2|发送的report_contact中包含群的信息(group_list)
-4|发送的report_contact中包含关注的公众号的信息(public_list)
+0|不发送report_contact  
+1|发送的report_contact中包含好友的信息(friend_list)  
+2|发送的report_contact中包含群的信息(group_list)  
+4|发送的report_contact中包含关注的公众号的信息(public_list)  
 
 (flag_report_contact的值可以为上述选项其中之一,或多个选项的联合(数值的或运算))
 
