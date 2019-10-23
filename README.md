@@ -35,6 +35,10 @@ https://s.weituibao.com/wehub/Emoji/emoji_index.html
 更新方式: 开启一个wehub客户端(此时最好不要登陆任何微信),点击右上角设置按钮-->弹出菜单-->检测更新,更新包下载完成之后会自动运安装.
 
 版本更新记录:  
+- 2019.10.23:
+  微信新版本适配:新增任务类型:接受入群邀请, 支持发送小程序
+  https://s.weituibao.com/wehub/package/WeHubSetup0.4.12.exe
+
 - 2019.8.30:  
   bug fix
   https://s.weituibao.com/wehub/package/WeHubSetup0.4.10.exe

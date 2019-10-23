@@ -16,7 +16,7 @@
 2019.4.4|v0.4.2|上报的个人微信号的信息中(城市,省份,国家等信息已准确),新增100,101两种本地打标签的任务类型.  wehub已支持websocket方式的通讯(见文档最下方的描述).   在发消息任务中增加at_style字段,可以把@符号放在文本中的任意位置 (见该任务类型的详细描述)
 2019.8.14|v0.4.6|新增了"查询个人号详情"的任务(task_type为16)和"创建新的群"的任务(task_type为17);新增report_user_info; report_new_msg上报的消息中新增了msg_id和msg_timestamp字段(分别代表消息的id和消息的时间戳)
 2019.8.29|v0.4.9|login_ack增加option字段(服务端可自定义report_contact中上报的数据内容),新增task_type为18的任务类型
-
+2019.10.23|v0.4.12| 新增任务类型:接受入群邀请(task_type=19), 支持发送小程序
 
 ## 概述
 #### 什么是WeHub?
@@ -41,7 +41,7 @@
   这些指令包括:  
   1.发送一条具体的消息(包括发送文字,发送图片,动态表情,任意格式的文件,发送链接,发送视频,发送个人名片)  
   2.将其他人踢出群  
-  3.向其他人发送入群邀请  
+  3.向好友发送入群邀请/拉好友入群  
   4.获取群成员信息  
   5.加群成员为好友  
   6.修改好友备注  
@@ -57,6 +57,7 @@
   16.上报指定好友的详情  
   17.建群  
   18.修改群名称  
+  19.接收入群邀请
 
 #### WeHub不能做什么?
 WeHub是基于PC版微信的功能而开发的,因此PC版微信上不具备的功能,WeHub也都不支持(如发朋友圈,发语音等行为都不支持).  
@@ -255,11 +256,11 @@ WeHub收到回调接口的login respone后
 4|发送的report_contact中包含关注的公众号的信息(public_list)  
 (flag_report_contact的值可以为上述选项其中一个或多个选项的数值相加后的结果)  
 eg:  
-      要wehub上报所有的信息 则值指定为7(1+2+4=7)  
-      如只上报好友和群的信息,则值指定为3(1+2=3)  
-      如只上报好友和公众号的信息,则值指定为5(1+4=5)  
-      如只上报群和公众号的信息,则值指定为6(2+4=6)  
-      如不上报任何信息,则值指定为0  
+        要wehub上报所有的信息 则值指定为7(1+2+4=7)  
+        如只上报好友和群的信息,则值指定为3(1+2=3)  
+        如只上报好友和公众号的信息,则值指定为5(1+4=5)  
+        如只上报群和公众号的信息,则值指定为6(2+4=6)  
+        如不上报任何信息,则值指定为0         
 
 <p><b>从0.4.0版本开始,wehub客户端已强制要求做安全验证(无论后台是否取消了安全验证,request中都会有nonce 字段).对于服务端而言,只需判断受到的request中是否有nonce 字段, 有这个字段时服务端必须返回正确的签名!!! 没有这个字段时回调接口无需做签名处理(signature可以置空)</b></p>
 
@@ -621,18 +622,23 @@ respone格式为<a href="#common_ack">[common_ack格式]</a>
       //如果是自己发/转发的图片,file_index为本地的文件路径
 }
 
-- 链接消息(分享某个网页链接)
+- 链接消息
+(可能是一个入群的链接,也可能是一个分享的网页的链接)
 {
     "msg_id": "xxxxx",            
     "msg_timestamp": xxxxxx,      
-    "msg_type":49, 					//49 代表链接消息
+    "msg_type":49,      //49 代表链接消息
     "room_wxid": "xxxxxxxx@chatroom", 
     "wxid_from": "wxid_xxxxxx", 
     "wxid_to": "wxid_xxxxxx", 
     "link_title":"标题", 			  //链接标题
     "link_desc": "副标题",           //链接描述（副标题）
-    "link_url":"http://xxxxx", 		//分享链接的url
-    "link_img_url": "http://xxxxxxx" //链接的缩略图的的Url,jpg或者png格式
+    "link_url":"http://xxxxx", 		   //链接的url
+    "link_img_url": "http://xxxxxxx", //链接的缩略图的的Url,jpg或者png格式
+    "sub_type": x,        //链接消息的子类型(0.4.12版本中新增)
+                          //当值为5时,link_url的值是一个入群邀请链接(见任务类型:接收进群邀请)
+                          //入群邀请链接只在一段时间内有效,过期后将无法进入被邀请的群
+
     "raw_msg": "xxxxxxx"		//微信的原始消息,xml格式,0.3.14版本中新增
 }
 raw_msg 中的关键字段有"title","des","url","thumburl"(分别与link_title,link_desc,link_url,link_img_url值对应),如果link_url值为空,请自行分析raw_msg中的url.
@@ -659,7 +665,7 @@ raw_msg 中的关键字段有"title","des","url","thumburl"(分别与link_title,
     "wxid_from": "wxid_xxxxxx", 
     "wxid_to": "wxid_xxxxxx", 
     "raw_msg": "xxxxxxx"    //微信中的小程序信息的原始数据,xml格式,请自行解析
-        //username,nickname 为关键字段
+    "file_index":  xxxxxxxxxxx  //小程序的封面的文件索引, 0.4.12新增 (如果需要转发这个小程序的话,该封面需先上传到第三方的服务器上)
 }
 
 - 转账事件 
@@ -1003,6 +1009,7 @@ respone格式为<a href="#common_ack">[common_ack格式]</a>
     "msg_type":43, 	
     "video_url":"http://xxxxxxx/xx.mp4" //回调接口推送给用户的视频的url地址, mp4格式 
 }
+
 注:如果要发任意文件(文件格式无限制),将video_url的值换成要发送的文件的url的地址即可.  
 例如若video_url设为 https://archive.apache.org/dist/httpd/docs/httpd-docs-2.4.16.en.pdf  
 即可将该pdf文件发送给对方.
@@ -1014,6 +1021,16 @@ respone格式为<a href="#common_ack">[common_ack格式]</a>
 {
     "msg_type":42, 	
     "wxid_card":"xxxxxx" 		//个人号/公众号的wxid
+}
+
+⑻发小程序
+//前提:wehub所管理的微信客户端必须支持小程序
+{
+    "msg_type":4901,
+    "raw_msg":"xxxxxxxx",   //小程序的raw_msg是一串xml格式的文本 [见"上报的消息单元"-->"小程序"中的raw_msg字段]
+                            //服务端可以存储这个raw_msg(不要做任何修改,这很重要!!!)之后用于小程序转发
+    "cover_url": "http://xxxxxxxx"    //小程序的封面图片的的url
+                                      //请保证url有效能被正常下载,否则转发的小程序接受者将看不到封面
 }
 ```
 
@@ -1067,6 +1084,9 @@ respone格式为<a href="#common_ack">[common_ack格式]</a>
     {
       "room_wxid":"xxxxx@chatroom", //目标群
       "wxid":"xxxxxxx"              //被拉进群的wxid
+      "flag":x  //0.4.12新增.
+                //默认为0:向好友发入群邀请链接
+                //值为1:不发入群邀请链接,而是直接将好友拉到群里(当群人数超过40时,该方法会失败)
     }
 }
 - 上报群成员信息:
@@ -1212,6 +1232,17 @@ wehub 通过report_room_member_info来主动上报,详情见[上报群成员详�
     "room_name":"xxxxx"                 //新群名称
   }
 }
+
+- 接受入群邀请
+{
+  "task_type":19,
+  "task_dict":
+  {
+    "invite_url":"http://support.weixin.qq.com/xxxx"       //入群链接的地址 (该值从上报的入群链接消息的link_url字段中获取)
+  }
+}
+注:为安全起见,不要在短时间内接收多个群的邀请.
+
 
 - 操作标签(新增,删除标签)
 {
