@@ -1,5 +1,5 @@
 
-wehub最新版本下载:https://s.weituibao.com/wehub/package/WeHubSetup0.4.10.exe
+wehub最新版本下载:https://s.weituibao.com/wehub/package/WeHubSetup0.4.12.exe
 
 使用wehub是否会导致封号?
 
@@ -36,7 +36,8 @@ https://s.weituibao.com/wehub/Emoji/emoji_index.html
 
 版本更新记录:  
 - 2019.10.23:
-  微信新版本适配:新增任务类型:接受入群邀请, 支持发送小程序
+  微信新版本适配:
+      新增任务类型:接受入群邀请, 支持发送小程序
   https://s.weituibao.com/wehub/package/WeHubSetup0.4.12.exe
 
 - 2019.8.30:  
