@@ -1,4 +1,4 @@
-#                                                        WeHub API接口规范
+#                                                        WeHub接口规范
 
 ## 修改记录
 修改时间|对应的客户端版本|协议修改内容
@@ -957,6 +957,7 @@ respone格式为<a href="#common_ack">[common_ack格式]</a>
    获取指定wxid的详情|16
    创建群|17
    修改群名称|18
+   接受入群邀请|19
 
 [文本消息中静态表情转义对照表](http://wxbs.oss-cn-hangzhou.aliyuncs.com/wehub/Emoji/emoji_index.html)
 

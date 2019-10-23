@@ -36,9 +36,10 @@ https://s.weituibao.com/wehub/Emoji/emoji_index.html
 
 版本更新记录:  
 - 2019.10.23:
-  微信新版本适配:
-      新增任务类型:接受入群邀请, 支持发送小程序
-  https://s.weituibao.com/wehub/package/WeHubSetup0.4.12.exe
+  发布 0.4.12: https://s.weituibao.com/wehub/package/WeHubSetup0.4.12.exe
+    适配微信新版本:
+    新增任务类型:接受入群邀请, 支持发送小程序
+  更新方式: 点击主界面右上角"齿轮"图标,在弹出的菜单中选择"检测更新"
 
 - 2019.8.30:  
   bug fix
