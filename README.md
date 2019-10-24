@@ -1,6 +1,4 @@
 
-wehub最新版本下载:https://s.weituibao.com/wehub/package/WeHubSetup0.4.12.exe
-
 使用wehub是否会导致封号?
 
 WeHub只是一个提供些许便利的工具软件,无法保证你的微信不被封号.
