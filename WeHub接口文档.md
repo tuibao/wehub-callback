@@ -636,7 +636,7 @@ respone格式为<a href="#common_ack">[common_ack格式]</a>
     "link_url":"http://xxxxx", 		   //链接的url
     "link_img_url": "http://xxxxxxx", //链接的缩略图的的Url,jpg或者png格式
     "sub_type": x,        //链接消息的子类型(0.4.12版本中新增)
-                          //当值为5时并且link_url的值中包含字符串"addchatroombyinvite"时,该链接消息是一个入群邀请链接(见任务类型:接收进群邀请)
+                          //当值为5时并且link_url的值是这种格式"http://support.weixin.qq.com/cgi-bin/mmsupport-bin/addchatroombyinvite?ticket=xxxxxxx"时,该链接消息是一个入群邀请链接(见任务类型:接收进群邀请)
                           //入群邀请链接只在一段时间内有效,过期后将无法进入被邀请的群
 
     "raw_msg": "xxxxxxx"		//微信的原始消息,xml格式,0.3.14版本中新增
