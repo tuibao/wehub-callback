@@ -637,13 +637,14 @@ respone格式为<a href="#common_ack">[common_ack格式]</a>
     "link_img_url": "http://xxxxxxx", //链接的缩略图的的Url,jpg或者png格式
     "sub_type": x,        //链接消息的子类型(0.4.12版本中新增)
                           //当值为5时并且link_url的值是以这种格式开头:
-                          //https://support.weixin.qq.com/cgi-bin/mmsupport-bin/addchatroombyinvite?ticket=xxxxxx时"
-                          //该链接消息是一个入群邀请链接(每个入群链接的ticket参数不一样,见任务类型:接收进群邀请)
-                          //入群邀请链接只在一段时间内有效,过期后将无法进入被邀请的群
+                      //"https://support.weixin.qq.com/cgi-bin/mmsupport-bin/addchatroombyinvite?ticket=xxxxxx时"
+                      //该链接消息是一个入群邀请链接(每个入群链接的ticket参数不一样,见任务类型:接收进群邀请)
+                      //入群邀请链接只在一段时间内有效,过期后将无法进入被邀请的群
 
     "raw_msg": "xxxxxxx"		//微信的原始消息,xml格式,0.3.14版本中新增
 }
-raw_msg 中的关键字段有"title","des","url","thumburl"(分别与link_title,link_desc,link_url,link_img_url值对应),如果link_url值为空,请自行分析raw_msg中的url.
+raw_msg 中的关键字段有"title","des","url","thumburl"(分别与link_title,link_desc,link_url,link_img_url值对应),  
+如果link_url值为空,请自行分析raw_msg中的url.
 
 
 - 表情消息
