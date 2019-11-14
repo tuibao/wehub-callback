@@ -325,7 +325,7 @@ data中相关字段描述
     "nickname":"xxxxx",             //微信昵称
     "remark_name" :"xxxx",          //好友备注
     "head_img":"http://xxxxxxxx"    //头像的url地址
-    "sex" : xx ,    				//性别:1男，2女
+    "sex" : xx ,    				//性别:1男，2女,0(未知)
     "country":"xxx",				//祖国(可能为空)
     "province":"xxxx",				//省份(可能为空)
     "city":"xxxxx"					//城市(可能为空)
@@ -487,6 +487,10 @@ request
     "room_nickname":			//这个微信号的群昵称
     "nickname":"xxxxx",             //微信昵称
     "head_img":"http://xxxxxxxx"    //头像的url地址
+    "sex":xx  //0未知,1 男， 2 女
+    "country":"xxx",
+    "province":"xxx",
+    "city":"xxx"
 }
 ```
 respone格式为<a href="#common_ack">[common_ack格式]</a>
@@ -639,7 +643,7 @@ respone格式为<a href="#common_ack">[common_ack格式]</a>
                           //当值为5时并且link_url的值是以这种格式开头:
                       //"https://support.weixin.qq.com/cgi-bin/mmsupport-bin/addchatroombyinvite?ticket=xxxxxx时"
                       //该链接消息是一个入群邀请链接(每个入群链接的ticket参数不一样,见任务类型:接收进群邀请)
-                      //入群邀请链接只在一段时间内有效,过期后将无法进入被邀请的群
+                          //入群邀请链接只在一段时间内有效,过期后将无法进入被邀请的群
 
     "raw_msg": "xxxxxxx"		//微信的原始消息,xml格式,0.3.14版本中新增
 }
