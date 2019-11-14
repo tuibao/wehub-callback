@@ -152,7 +152,7 @@ wehub发送的数据(简称为:request)json格式为:
 又如: "error_code": 0, 
 	error_code其值语义为一个具体的错误码(数字),因此0前后不需要""符号
 ```
->wehub发送的request 以utf-8编码,回调接口返回的respone 中的json格式数据 wehub 也以utf-8编码来解析 ,文档的示例代码中出现的  "$xxx"  符号代表这里应该出现一个名为"xxx"结构的数据对象,如 <a href="#memberInfo">$memberInfo</a>,  <a href="#task">$task</a>,  <a   href ="#report_msgunit">$report_msgunit</a>等
+>wehub发送的request 以utf-8编码,回调接口返回的respone 中的json格式数据 wehub 也以utf-8编码来解析 ,文档的示例代码中出现的  "$xxx"  符号代表这里应该出现一个名为"xxx"结构的数据对象,如  <a href="#task">$task</a>,  <a   href ="#report_msgunit">$report_msgunit</a>等
 
 request中的action类型|respone中的ack_type
 ----|----
@@ -478,16 +478,14 @@ request
    	   ]
     }
 }
-```
-####  <a name="memberInfo">$memberInfo格式</a>
-```
+$memberInfo 结构如下:
 {
     "wxid":  "wxid",             //wxid
     "wx_alias": "xxxxx",         //微信号(有可能为空)
-    "room_nickname":			//这个微信号的群昵称
+    "room_nickname":			       //这个微信号的群昵称
     "nickname":"xxxxx",             //微信昵称
     "head_img":"http://xxxxxxxx"    //头像的url地址
-    "sex":xx  //0未知,1 男， 2 女
+    "sex":xx,          //0未知,1 男， 2 女
     "country":"xxx",
     "province":"xxx",
     "city":"xxx"
@@ -530,6 +528,14 @@ request
         "head_img":"xxxx",  //群头像的url地址
         "memberInfo_list":[$memberInfo,$memberInfo,.....]  //见memberInfo结构
       }
+}
+$memberInfo结构如下
+{
+    "wxid":  "wxid",             //wxid
+    "wx_alias": "xxxxx",         //微信号(有可能为空)
+    "room_nickname":             //这个微信号的群昵称
+    "nickname":"xxxxx",             //微信昵称
+    "head_img":"http://xxxxxxxx"    //头像的url地址
 }
 ```
 respone格式为<a href="#common_ack">[common_ack格式]</a>
@@ -1386,11 +1392,11 @@ request格式
     "remark_name" :"xxxx",          //好友备注
     "head_img":"http://xxxxxxxx"    //头像的url地址(有可能获取不到为空)
     "head_img_data":"xxxxxxxxxx"    //头像的二进制数据(jpg格式)经过base64编码后的字符串
-    "sex" : xx ,            //性别:1 男， 2 女
+    "sex" : xx ,            //性别:0未知,1 男， 2 女
     "country":"xxx",        //祖国(可能为空)
-    "province":"xxxx",        //省份(可能为空)
+    "province":"xxxx",      //省份(可能为空)
     "city":"xxxxx"          //城市(可能为空)
-    "is_friend": x        //是否是我的好友,0:不是;1:是
+    "is_friend": x              //是否是我的好友,0:不是;1:是
     "room_list":["xx","xxx"]    //该微信号所在的群的列表
   }
 }
