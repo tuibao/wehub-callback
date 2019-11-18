@@ -505,7 +505,7 @@ request
       "data":{
         "room_wxid":"xxxxxxx@chatroom",
         "owner_wxid":"xxxxx",	//群主wxid, 0.3.8版本中加入
-        "wxid_list";['xxxxxx','xxxxx'],  //变化的成员的wxid列表
+        "wxid_list";["xxxxxx","xxxxx"],  //变化的成员的wxid列表
         "flag": flag //0,群成员减少;1,群成员增加
       }
 }
@@ -1295,7 +1295,7 @@ request格式
     "data":
     {
       "wxid":"xxxxxx",//被检测的wxid
-      "status": x  	//0 :正常状态(不是僵尸粉)
+      "result": x  	//0 :正常状态(不是僵尸粉)
                     //1 :检测为僵尸粉(对方把我拉黑了)
                     //2 :检测为僵尸粉(对方把我从他的好友列表中删除了)
     }
