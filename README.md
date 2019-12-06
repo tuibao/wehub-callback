@@ -7,7 +7,7 @@
 更新方式: 开启一个wehub客户端(此时最好不要登陆任何微信),点击右上角设置按钮-->弹出菜单-->检测更新,更新包下载完成之后会自动运安装.
 
 版本更新记录:  
-- 2019.11.27:
+- 2019.11.27:  
    发布 0.4.20:  
    [优化Win10报病毒的问题](http://wehub.weituibao.com/doc/post/wehub-win10-viruas-mistaken.html)  
    https://s.weituibao.com/wehub/package/WeHubSetup0.4.20.exe  
