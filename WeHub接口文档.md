@@ -190,7 +190,7 @@ report_user_info|common_ack
 </b></p>  
 
 - 如何将我信任的微信号加入到白名单中?  
-点击该微信PC客户端左上方头像,将弹出的界面中显示的微信号的字符串值加入到的白名单中.
+点击该微信PC客户端左上方头像,将弹出的界面中显示的微信号的字符串值加入到的白名单中.(第三方自己实现对白名单的存储)
 
 ![image](http://wxbs.oss-cn-hangzhou.aliyuncs.com/wehub/img/get_wechat_id.png)
 
@@ -256,14 +256,35 @@ WeHub收到回调接口的login respone后
 4|发送的report_contact中包含关注的公众号的信息(public_list)  
 (flag_report_contact的值可以为上述选项其中一个或多个选项的数值相加后的结果)  
 eg:  
-        要wehub上报所有的信息 则值指定为7(1+2+4=7)  
-        如只上报好友和群的信息,则值指定为3(1+2=3)  
-        如只上报好友和公众号的信息,则值指定为5(1+4=5)  
-        如只上报群和公众号的信息,则值指定为6(2+4=6)  
-        如不上报任何信息,则值指定为0         
+ 上报所有的信息 则值指定为7(1+2+4=7)
+   - [x] 1 :friend_list
+   - [x] 2 :group_list
+   - [x] 4 :public_list
+
+如只上报好友和群的信息,则值指定为3(1+2=3)  
+   - [x] 1 :friend_list
+   - [x] 2 :group_list
+   - [ ] 4 :public_list
+
+如只上报好友和公众号的信息,则值指定为5(1+4=5)  
+   - [x] 1 :friend_list
+   - [ ] 2 :group_list
+   - [x] 4 :public_list
+
+如只上报群和公众号的信息,则值指定为6(2+4=6)  
+   - [ ] 1 :friend_list
+   - [x] 2 :group_list
+   - [x] 4 :public_list
+
+如不上报任何信息,则值指定为0  
+   - [ ] 1 :friend_list
+   - [ ] 2 :group_list
+   - [ ] 4 :public_list
 
 <p><b>从0.4.0版本开始,wehub客户端已强制要求做安全验证(无论后台是否取消了安全验证,request中都会有nonce 字段).对于服务端而言,只需判断受到的request中是否有nonce 字段, 有这个字段时服务端必须返回正确的签名!!! 没有这个字段时回调接口无需做签名处理(signature可以置空)</b></p>
 
+wehub的登录流程图如下 <a href="http://wxbs.oss-cn-hangzhou.aliyuncs.com/wehub/img/wehub_login_procecss_uml.png" target="_blank">[点击查看]</a>:
+![image](http://wxbs.oss-cn-hangzhou.aliyuncs.com/wehub/img/wehub_login_procecss_uml.png)
 
 ### logout(微信退出通知)
 request格式:
@@ -582,7 +603,7 @@ respone格式为<a href="#common_ack">[common_ack格式]</a>
    链接消息 |49|支持|----
    小程序|4901|0.4.12开始支持|----
  转账 |4902|暂不支持|----
- 文件 |4903|暂不支持|暂不支持
+ 文件消息 |4903|支持|支持
    微信系统通知 |10000|不支持|----
 
 ```
@@ -1018,17 +1039,22 @@ respone格式为<a href="#common_ack">[common_ack格式]</a>
     "link_desc": "副标题",             //链接描述（副标题）
     "link_img_url": "http://xxxxxxx"    //链接的缩略图的的Url,jpg或者png格式
 }
-⑸视频消息/文件消息
+⑸视频消息
 {
-    "msg_type":43, 	
-    "video_url":"http://xxxxxxx/xx.mp4" //回调接口推送给用户的视频的url地址, mp4格式 
+    "msg_type":43,  
+    "video_url":"http://xxxxxxx/xx.mp4" //视频的url地址(必须是mp4格式,其他格式会当成普通文件发送) 
 }
 
-注:如果要发任意文件(文件格式无限制),将video_url的值换成要发送的文件的url的地址即可.  
-例如若video_url设为 https://archive.apache.org/dist/httpd/docs/httpd-docs-2.4.16.en.pdf  
-即可将该pdf文件发送给对方.
+⑹文件消息
+发文件消息(文件格式无限制)同发视频消息,只需将video_url的值换成要发送的文件的url的地址即可.  
+例如要发送某个pdf文件:https://archive.apache.org/dist/httpd/docs/httpd-docs-2.4.16.en.pdf  
+{
+    "msg_type":43,  
+    "video_url":"https://archive.apache.org/dist/httpd/docs/httpd-docs-2.4.16.en.pdf"   //文件的url地址
+}
 
-⑹语音消息
+
+语音消息
 暂时无法支持发送语音消息
 
 ⑺个人名片
