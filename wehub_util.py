@@ -40,27 +40,34 @@ def openWeHub(qr_session = None,qr_upload_url= None):
 
 def quit_WeHub_by_pid(wehub_pid):
     '''优雅地结束掉某一个wehub进程，如果强制kill进程会导致微信崩溃'''
-    process_handle  = win32api.OpenProcess(win32con.SYNCHRONIZE,False,wehub_pid)
+    process_handle = None
+    pipe_handle = None
     wehub_pipeName = r'\\.\\pipe\\WeHub'+str(wehub_pid)
-    pipe_handle = win32file.CreateFile(wehub_pipeName, 
-            win32file.GENERIC_READ | win32file.GENERIC_WRITE,
-            0,
-            None,
-            win32file.OPEN_EXISTING,
-            0,None)
-    if pipe_handle==-1:
-        print("connect pipe failed")
-        return False
-    win32pipe.SetNamedPipeHandleState(pipe_handle, None, None, None)
+    try:
+        process_handle  = win32api.OpenProcess(win32con.SYNCHRONIZE,False,wehub_pid)
+        pipe_handle = win32file.CreateFile(wehub_pipeName, 
+                win32file.GENERIC_READ | win32file.GENERIC_WRITE,
+                0,
+                None,
+                win32file.OPEN_EXISTING,
+                0,None)
+        win32pipe.SetNamedPipeHandleState(pipe_handle, None, None, None)
+        quit_cmd = "q".encode("ascii")
+        if win32file.WriteFile(pipe_handle,quit_cmd):
+             print("quit_cmd have sent")
 
-    quit_cmd = "q".encode("ascii")
-    win32file.WriteFile(pipe_handle,quit_cmd)
-    pipe_handle.Close()
-    print("send quit_cmd")
-    win32event.WaitForSingleObject(process_handle, 0)
-    print("wehub[%d] exit"%wehub_pid)
-    process_handle.Close()
-    return True
+        if process_handle:
+            #等待进程退出
+            print("wait for wehub[%d] terminate..."%wehub_pid)
+            win32event.WaitForSingleObject(process_handle, 5000)
+            print("wehub[%d] exited"%wehub_pid)
+    except Exception as e:
+        raise e
+    finally:
+        if pipe_handle:
+            pipe_handle.Close()
+        if process_handle:
+            process_handle.Close()
 
 def quit_all_wehub():
     '''结束所有的wehub进程'''
@@ -81,7 +88,7 @@ def quit_all_wehub():
 if __name__ =='__main__':
     #用法如下：
     #pids = get_wehub_pidList()
-    #quit_WeHub_by_pid(pids[0])
+    #quit_WeHub_by_pid(9492)
     #quit_all_wehub()
     #openWeHub("test",r'http://localhost:5678/upload_file')
     print("it is an util script for WeHub")
