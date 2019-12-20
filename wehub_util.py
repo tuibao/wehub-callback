@@ -1,7 +1,10 @@
 import psutil
 import subprocess,time
+import win32api
+import win32con
 import win32file
 import win32pipe
+import win32event
 import threading
 import winreg
 
@@ -37,23 +40,26 @@ def openWeHub(qr_session = None,qr_upload_url= None):
 
 def quit_WeHub_by_pid(wehub_pid):
     '''优雅地结束掉某一个wehub进程，如果强制kill进程会导致微信崩溃'''
+    process_handle  = win32api.OpenProcess(win32con.SYNCHRONIZE,False,wehub_pid)
     wehub_pipeName = r'\\.\\pipe\\WeHub'+str(wehub_pid)
-    handle = win32file.CreateFile(wehub_pipeName, 
+    pipe_handle = win32file.CreateFile(wehub_pipeName, 
             win32file.GENERIC_READ | win32file.GENERIC_WRITE,
             0,
             None,
             win32file.OPEN_EXISTING,
             0,None)
-    if handle==-1:
+    if pipe_handle==-1:
         print("connect pipe failed")
         return False
-    res = win32pipe.SetNamedPipeHandleState(handle, None, None, None)
-    if res == 0:
-        print("SetNamedPipeHandleState return code: {res}")
-        return False
+    win32pipe.SetNamedPipeHandleState(pipe_handle, None, None, None)
+
     quit_cmd = "q".encode("ascii")
-    win32file.WriteFile(handle,quit_cmd)
-    handle.Close()
+    win32file.WriteFile(pipe_handle,quit_cmd)
+    pipe_handle.Close()
+    print("send quit_cmd")
+    win32event.WaitForSingleObject(process_handle, 0)
+    print("wehub[%d] exit"%wehub_pid)
+    process_handle.Close()
     return True
 
 def quit_all_wehub():
@@ -76,7 +82,7 @@ if __name__ =='__main__':
     #用法如下：
     #pids = get_wehub_pidList()
     #quit_WeHub_by_pid(pids[0])
-    #quit_all_wehub()
+    quit_all_wehub()
     #openWeHub("test",r'http://localhost:5678/upload_file')
-    print("it is a util script for WeHub")
+    print("it is an util script for WeHub")
 
