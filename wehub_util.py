@@ -82,7 +82,7 @@ if __name__ =='__main__':
     #用法如下：
     #pids = get_wehub_pidList()
     #quit_WeHub_by_pid(pids[0])
-    quit_all_wehub()
+    #quit_all_wehub()
     #openWeHub("test",r'http://localhost:5678/upload_file')
     print("it is an util script for WeHub")
 
