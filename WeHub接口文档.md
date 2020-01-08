@@ -565,7 +565,8 @@ $memberInfo结构如下
 respone格式为<a href="#common_ack">[common_ack格式]</a>
 
 ### report_room_removed
-触发时机：被踢出群或者主动退出某个群
+触发时机：被踢出群或者主动退出某个群  
+```
 request
 {
     "action":"report_room_removed",
@@ -575,6 +576,8 @@ request
         "wxid_removed":"xxxxx",   // 退出的群
       }
 }
+```
+respone格式为<a href="#common_ack">[common_ack格式]</a>  
 
 
 ### report_new_msg(上报新的聊天消息)
