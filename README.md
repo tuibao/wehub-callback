@@ -7,6 +7,15 @@
 更新方式: 开启一个wehub客户端(此时最好不要登陆任何微信),点击右上角设置按钮-->弹出菜单-->检测更新,更新包下载完成之后会自动运安装.
 
 版本更新记录:  
+- 2019.12.23:
+   发布0.4.26: https://s.weituibao.com/wehub/package/WeHubSetup0.4.26.exe  
+   新增退出群的通知report_room_removed
+   增加对企业微信的支持:
+      暂时只支持读取2.7.1.88版本的微信中的企业微信功能
+      暂不支持对企业微信好友设置标签
+      企业微信的wxid格式为:”xxxxxxxx@openim”
+      企业微信群的wxid格式为:”xxxxxxx@im.chatroom”
+
 - 2019.11.27:  
    发布 0.4.20:  
    [优化Win10报病毒的问题](http://wehub.weituibao.com/doc/post/wehub-win10-viruas-mistaken.html)  

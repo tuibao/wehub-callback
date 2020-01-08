@@ -17,6 +17,7 @@
 2019.8.14|v0.4.6|新增了"查询个人号详情"的任务(task_type为16)和"创建新的群"的任务(task_type为17);新增report_user_info; report_new_msg上报的消息中新增了msg_id和msg_timestamp字段(分别代表消息的id和消息的时间戳)
 2019.8.29|v0.4.9|login_ack增加option字段(服务端可自定义report_contact中上报的数据内容),新增task_type为18的任务类型
 2019.10.23|v0.4.12| 新增任务类型:接受入群邀请(task_type=19), 支持发送小程序
+2019.12.23|v0.4.26| 新增退出群的通知report_room_removed,新增client_session字段
 
 ## 概述
 #### 什么是WeHub?
@@ -36,6 +37,7 @@
   7.收到新的加好友请求(report_friend_add_request)  
   8.好友被删除(report_friend_removed)  
   9.新的好友(report_new_friend)  
+  10.离开了某个群（report_room_removed，被踢出或者主动退出某个群）
 
   二. 执行回调接口下发的指令:
   这些指令包括:  
@@ -128,6 +130,7 @@ wehub发送的数据(简称为:request)json格式为:
     "action": "具体业务名",
     "appid": "第三方申请的id",
     "wxid": "当前登录的wxid",
+    "client_session":"xxxxxxxx"   //0.4.26版本中新增(详情见:http://wehub.weituibao.com/doc/post/version0426.html)
     "data": {具体业务的相关数据}
 }
 ```
@@ -560,6 +563,18 @@ $memberInfo结构如下
 }
 ```
 respone格式为<a href="#common_ack">[common_ack格式]</a>
+
+### report_room_removed
+触发时机：被踢出群或者主动退出某个群
+request
+{
+    "action":"report_room_removed",
+    "appid":"xxxxxxx",
+    "wxid": "wxid_xxxxxxx",
+      "data":{
+        "wxid_removed":"xxxxx",   // 退出的群
+      }
+}
 
 
 ### report_new_msg(上报新的聊天消息)
