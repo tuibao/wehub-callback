@@ -1,5 +1,5 @@
 
-[WeHub文档主页](http://wehub.weituibao.com/doc/index.html)
+[WeHub文档主页](http://wehub.weituibao.com/doc/)
 ------
 
 从0.4.0版本开始,wehub 支持在线更新. 
