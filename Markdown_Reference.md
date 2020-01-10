@@ -1,12 +1,3 @@
----
-layout: default
-title: markdown
-has_children: false
-nav_order: 3
-toc_levels: 1..4
-permalink: /markdown.html
----
-
 # Markdown For Typora
 
 ## Overview
